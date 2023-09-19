@@ -1,0 +1,27 @@
+version: '3.4'
+
+services:
+  dicomexample:
+    image: ${DOCKER_REGISTRY-}dicomexample
+    build:
+      context: .
+      dockerfile: DicomExample/Dockerfile
+
+  dicomsaver:
+    image: ${DOCKER_REGISTRY-}dicomsaver
+    build:
+      context: .
+      dockerfile: DicomSaver/Dockerfile
+      
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+    - 5000:15672
+  
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: dicom_saver_db
