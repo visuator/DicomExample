@@ -39,7 +39,8 @@ namespace DicomSaver.Services
 
         private async Task Handle(object sender, BasicDeliverEventArgs e)
         {
-            // Да, разумеется нужно проверять тип переданного мессаджа. Вообще, я бы для этого дела выделил очередь (отдельную). Ну либо routeKey.
+            // Да, разумеется нужно проверять тип переданного мессаджа. Вообще, я бы для этого дела выделил очередь (отдельную). 
+            // p.s routekey игнорируется при обменнике типа Fanout, так что только очередь.
             if (sender is not AsyncEventingBasicConsumer c) return;
             await using var scope = _factory.CreateAsyncScope();
             var logger = scope.ServiceProvider.GetRequiredService<ILogger<EventHostedService>>();
